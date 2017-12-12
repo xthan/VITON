@@ -43,7 +43,3 @@ If this code or dataset helps your research, please cite our paper:
       journal = {arXiv preprint arXiv:1711.08447},
       year  = {2017},
     }
-=======
-# VITON
-Code and dataset for paper "VITON: An Image-based Virtual Try-on Network"
->>>>>>> 52d1c77d656854e6931c8eb74290cb14609040f1
