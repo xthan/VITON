@@ -18,20 +18,31 @@ Put all folder and labels in the ```data``` folder:
 
 ```data/pose.pkl```: a pickle file containing a dictionary of the pose keypoints of each reference image. Please refer to [this demo](https://github.com/ZheC/Realtime_Multi-Person_Pose_Estimation/blob/master/testing/python/demo.ipynb) for how to parse the stored results, and [OpenPose output] https://github.com/CMU-Perceptual-Computing-Lab/openpose/blob/master/doc/output.md) to understand the output format.
 
+```data/pose/```: folder containing the pose keypoints of each reference image.
+
 ```data/segment```: folder containing the segmentation map of each reference image. In a segmentation map, label 5 corresponds to the regions of tops (used as pseudo ground truth of clothing region). label 1 (hat), 2 (hair), 4 (sunglasses), and 13 (face) are merged as the face/hair representation. All other non-background regions are merged for extracting the body representation. The colormap for visualization can be downloaded [here](https://github.com/Engineering-Course/LIP_SSL/blob/master/human_colormap.mat). Due to padding operations of the parser, these segmentation maps are 641x641, you need to crop them based on the aspect ratio of the original reference images.
 
 ```data/viton_train_pairs.txt```: 14,221 reference image and clothing training image pairs.
 
 ```data/viton_test_pairs.txt```: 2,032 reference image and target clothing testing image pairs. Note that these pairs are only used for the evaluation in our paper, one can choose any reference image and target clothing to generate the virtual try-on results.
 
+### Test
+
+#### First stage
+Download pretrained models on [Google Drive](https://drive.google.com/drive/folders/1qFU4KmvnEr4CwEFXQZS_6Ebw5dPJAE21?usp=sharing). Put them under ```model/``` folder.
+
+Run ```test_stage1.sh``` to do the inference.
+The results are in ```results/stage1/images/```. ```results/stage1/index.html``` visualizes the results.
 
 ### Todo list
-- [ ] Test code of the first stage.
+
+- [x] Code of testing the first stage.
 - [ ] Data preparation code.
 - [ ] Code of training the first stage.
 - [ ] Shape context matching and warping.
 - [ ] Test code of the second stage.
 - [ ] Code of training the second stage.
+
 
 ### Citation
 
