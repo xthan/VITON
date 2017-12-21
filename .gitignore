@@ -29,6 +29,9 @@ data/women_top/*
 data/pose/*
 data/segment/*
 
+model/*
+results/*
+
 # Logs and databases #
 ######################
 *.log
