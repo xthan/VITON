@@ -45,7 +45,7 @@ Then ```test_stage2.sh``` will do the refinement and generate the final results,
 - [x] Code of testing the first stage.
 - [ ] Data preparation code.
 - [ ] Code of training the first stage.
-- [ ] Shape context matching and warping.
+- [x] Shape context matching and warping.
 - [x] Code of testing the second stage.
 - [ ] Code of training the second stage.
 
