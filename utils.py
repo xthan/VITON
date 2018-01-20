@@ -307,6 +307,7 @@ def process_image(encoded_image,
   # only logged in thread 0.
   def image_summary(name, image):
     return
+    # Do not do summary inside .
     # if not thread_id:
     #   tf.summary.image(name, tf.expand_dims(image, 0))
 
@@ -383,7 +384,6 @@ def process_image(encoded_image,
 
 
 
-
 def conv(batch_input, out_channels, stride):
   with tf.variable_scope("conv"):
     in_channels = batch_input.get_shape()[3]
@@ -426,27 +426,6 @@ def lrelu(x, a=0.2):
     return (0.5 * (1 + a)) * x + (0.5 * (1 - a)) * tf.abs(x)
 
 
-# always keep batchnorm in training mode
-def batchnorm(input, is_training=True):
-  with tf.variable_scope("batchnorm"):
-    # this block looks like it has 3 inputs on the graph unless we do this
-    input = tf.identity(input)
-
-    channels = input.get_shape()[3]
-    offset = tf.get_variable("offset",
-                             [channels],
-                             dtype=tf.float32,
-                             initializer=tf.zeros_initializer())
-    scale = tf.get_variable("scale",
-                      [channels],
-                      dtype=tf.float32,
-                      initializer=tf.random_normal_initializer(1.0, 0.02))
-    mean, variance = tf.nn.moments(input, axes=[0, 1, 2], keep_dims=False)
-    variance_epsilon = 1e-5
-    normalized = tf.nn.batch_normalization(input, mean, variance, offset,
-                            scale, variance_epsilon=variance_epsilon)
-    return normalized
-
 # seperate batch norm training and testing
 def batch_norm(inputs, is_training=True, decay=0.999):
   with tf.variable_scope("batchnorm"):
@@ -457,7 +436,6 @@ def batch_norm(inputs, is_training=True, decay=0.999):
     epsilon = 1e-5
     if is_training:
       batch_mean, batch_var = tf.nn.moments(inputs, axes=[0, 1, 2], keep_dims=False)
-      # batch_mean, batch_var = tf.nn.moments(inputs, [0])
       train_mean = tf.assign(pop_mean,
                              pop_mean * decay + batch_mean * (1 - decay))
       train_var = tf.assign(pop_var,
@@ -617,7 +595,8 @@ def compute_error(real, fake, mask=None):
     return tf.reduce_mean(tf.abs(fake - real))  # simple loss
   else:
     _, h, w, _ = real.get_shape().as_list()
-    sampled_mask = tf.image.resize_images(mask, (h, w), method=tf.image.ResizeMethod.NEAREST_NEIGHBOR)
+    sampled_mask = tf.image.resize_images(mask, (h, w),
+          method=tf.image.ResizeMethod.NEAREST_NEIGHBOR)
     return tf.reduce_mean(tf.abs(fake - real) * sampled_mask)  # simple loss
 
 

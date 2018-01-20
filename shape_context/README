@@ -1,0 +1,26 @@
+Shape Context Demo 
+Serge Belongie (sjb@eecs.berkeley.edu)
+Sept. 4, 2000
+
+
+1. Information on Chui and Rangarajan data (for demo_1.m)
+
+Each filename is of the form 
+save_{fish,chinese,hand}_{def,noise,outlier}_m_n.mat
+The value of m refers to the test number, n refers to the test example
+number.  The range of m is 1-5 for deformation and outlier, 1-6 for
+noise.  The range of n is 1-100.
+
+Example: save_fish_outlier_3_2.mat
+This corresponds to the "fish" shape, outlier test, test no. 3 (out of
+5), corresponding to 100% outlier to data ratio, example no. 2.
+
+Each file contains the model data (x1), the target data (y2a), and in
+the case of the noise test, the target data before adding noise (y2).
+
+
+2. Information on Digit Matching test (for demo_2.m)
+
+This uses test data from Yann LeCun's MNIST database; see
+http://www.research.att.com/~yann/ocr/mnist/ for details.
+
