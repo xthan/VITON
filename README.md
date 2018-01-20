@@ -34,13 +34,19 @@ Download pretrained models on [Google Drive](https://drive.google.com/drive/fold
 Run ```test_stage1.sh``` to do the inference.
 The results are in ```results/stage1/images/```. ```results/stage1/index.html``` visualizes the results.
 
+#### Second stage
+
+Run the matlab script ```shape_context_warp.m``` to extract the TPS transformation control points.
+
+Then ```test_stage2.sh``` will do the refinement and generate the final results, which locates in ```results/stage2/images/```. ```results/stage2/index.html``` visualizes the results.
+
 ### Todo list
 
 - [x] Code of testing the first stage.
 - [ ] Data preparation code.
 - [ ] Code of training the first stage.
 - [ ] Shape context matching and warping.
-- [ ] Test code of the second stage.
+- [x] Code of testing the second stage.
 - [ ] Code of training the second stage.
 
 
