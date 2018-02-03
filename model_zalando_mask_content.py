@@ -36,15 +36,13 @@ import tensorflow as tf
 FLAGS = tf.app.flags.FLAGS
 
 tf.flags.DEFINE_string("input_file_pattern",
-                       "../../prepare_data/tfrecord/zalando-tps-points-new-train-?????-of-00032",
+                       "./prepare_data/tfrecord/zalando-train-?????-of-00032",
                        "File pattern of sharded TFRecord input files.")
-tf.flags.DEFINE_string("train_dir", "tmp/",
-                       "Directory for saving and loading model checkpoints.")
 tf.flags.DEFINE_string("mode", "train", "Training or testing")
 tf.flags.DEFINE_string("checkpoint", "", "Checkpoint path to resume training.")
-tf.flags.DEFINE_string("output_dir", "model/results",
+tf.flags.DEFINE_string("output_dir", "model/stage1/",
                        "Output directory of images.")
-tf.flags.DEFINE_string("vgg_model_path", "model/imagenet-vgg-verydeep-19.mat",
+tf.flags.DEFINE_string("vgg_model_path", "./model/imagenet-vgg-verydeep-19.mat",
                        "model of the trained vgg net.")
 
 tf.flags.DEFINE_integer("number_of_steps", 1000000,
@@ -59,25 +57,25 @@ tf.flags.DEFINE_integer("ngf", 64,
 tf.flags.DEFINE_integer("ndf", 64,
                         "number of discriminator filters in first conv layer")
 # Summary
-tf.flags.DEFINE_integer("summary_freq", 50, #100
+tf.flags.DEFINE_integer("summary_freq", 100
                         "update summaries every summary_freq steps")
-tf.flags.DEFINE_integer("progress_freq", 100, #100
+tf.flags.DEFINE_integer("progress_freq", 10
                         "display progress every progress_freq steps")
 tf.flags.DEFINE_integer("trace_freq", 0,
                         "trace execution every trace_freq steps")
-tf.flags.DEFINE_integer("display_freq", 100, #300
+tf.flags.DEFINE_integer("display_freq", 300
                         "write current training images every display_freq steps")
 tf.flags.DEFINE_integer("save_freq", 3000,
                         "save model every save_freq steps, 0 to disable")
 
-
+# Weights
 tf.flags.DEFINE_float("mask_offset", 1.0, "Weight mask is emphasized.")
 tf.flags.DEFINE_float("number_of_samples", 14221.0, "Samples in training set.")
 tf.flags.DEFINE_float("lr", 0.0002, "Initial learning rate.")
 tf.flags.DEFINE_float("beta1", 0.5, "momentum term of adam")
 tf.flags.DEFINE_float("mask_l1_weight", 1.0, "Weight on L1 term of product mask.")
 tf.flags.DEFINE_float("content_l1_weight", 1.0, "Weight on L1 term of content.")
-tf.flags.DEFINE_float("perceptual_weight", 1.0, "weight on GAN term.")
+tf.flags.DEFINE_float("perceptual_weight", 3.0, "weight on GAN term.")
 
 
 tf.logging.set_verbosity(tf.logging.INFO)
@@ -264,8 +262,7 @@ def build_input():
   for thread_id in range(FLAGS.num_preprocess_threads):
     serialized_example = input_queue.dequeue()
     (encoded_image, encoded_prod_image, body_segment, prod_segment,
-     skin_segment, pose_map, image_id) = parse_tf_example(serialized_example,
-                                                          stage=FLAGS.stage)
+     skin_segment, pose_map, image_id) = parse_tf_example(serialized_example)
 
     (image, product_image, body_segment, prod_segment,
      skin_segment, pose_map) = process_image(encoded_image,
