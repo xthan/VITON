@@ -28,7 +28,7 @@
 data/women_top/*
 data/pose/*
 data/segment/*
-
+prepare_data/tfrecord/*
 model/*
 results/*
 
