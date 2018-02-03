@@ -22,6 +22,10 @@ Put all folder and labels in the ```data``` folder:
 
 ```data/segment```: folder containing the segmentation map of each reference image. In a segmentation map, label 5 corresponds to the regions of tops (used as pseudo ground truth of clothing region). label 1 (hat), 2 (hair), 4 (sunglasses), and 13 (face) are merged as the face/hair representation. All other non-background regions are merged for extracting the body representation. The colormap for visualization can be downloaded [here](https://github.com/Engineering-Course/LIP_SSL/blob/master/human_colormap.mat). Due to padding operations of the parser, these segmentation maps are 641x641, you need to crop them based on the aspect ratio of the original reference images.
 
+```data/tps/```: TPS control points between product image and its corresponding reference image.
+
+```data/viton_train_images.txt```: training image list.
+
 ```data/viton_train_pairs.txt```: 14,221 reference image and clothing training image pairs.
 
 ```data/viton_test_pairs.txt```: 2,032 reference image and target clothing testing image pairs. Note that these pairs are only used for the evaluation in our paper, one can choose any reference image and target clothing to generate the virtual try-on results.
@@ -40,15 +44,33 @@ Run the matlab script ```shape_context_warp.m``` to extract the TPS transformati
 
 Then ```test_stage2.sh``` will do the refinement and generate the final results, which locates in ```results/stage2/images/```. ```results/stage2/index.html``` visualizes the results.
 
-### Todo list
 
+### Train
+
+#### Prepare data
+Go inside ```prepare_data```. 
+
+First run ```extract_tps.m```. This will take sometime, you can try run it in parallel or directly download the pre-computed TPS control points via Google Drive and put them in ```data/tps/```.
+
+Then run ```./preprocess_viton.sh```, and the generated TF records will be in ```prepare_data/tfrecord```.
+
+
+#### First stage
+Run ```train_stage1.sh```
+
+#### Second stage
+Run ```train_stage2.sh```
+
+
+<!---
+### Todo list
 - [x] Code of testing the first stage.
-- [ ] Data preparation code.
-- [ ] Code of training the first stage.
+- [x] Data preparation code.
+- [x] Code of training the first stage.
 - [x] Shape context matching and warping.
 - [x] Code of testing the second stage.
-- [ ] Code of training the second stage.
-
+- [x] Code of training the second stage.
+-->
 
 ### Citation
 
