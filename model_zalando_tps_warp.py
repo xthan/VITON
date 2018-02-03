@@ -38,20 +38,18 @@ from tps_transformer import tps_stn
 FLAGS = tf.app.flags.FLAGS
 
 tf.flags.DEFINE_string("input_file_pattern",
-                       "../../prepare_data/tfrecord/zalando-tps-points-new-train-?????-of-00032",
+                       "./prepare_data/tfrecord/zalando-train-?????-of-00032",
                        "File pattern of sharded TFRecord input files.")
-tf.flags.DEFINE_string("train_dir", "tmp/",
-                       "Directory for saving and loading model checkpoints.")
 tf.flags.DEFINE_string("mode", "train", "Training or testing")
 tf.flags.DEFINE_string("checkpoint", "", "Checkpoint path to resume training.")
 tf.flags.DEFINE_string("gen_checkpoint", "",
-                       "Checkpoint path to the initial generative model training.")
-tf.flags.DEFINE_string("output_dir", "model/results",
+                       "Checkpoint path to the initial generative model.")
+tf.flags.DEFINE_string("output_dir", "model/stage2/",
                        "Output directory of images.")
-tf.flags.DEFINE_string("vgg_model_path", "../imagenet-vgg-verydeep-19.mat",
+tf.flags.DEFINE_string("vgg_model_path", "./model/imagenet-vgg-verydeep-19.mat",
                        "model of the trained vgg net.")
 
-tf.flags.DEFINE_integer("number_of_steps", 1000000,
+tf.flags.DEFINE_integer("number_of_steps", 100000,
                         "Number of training steps.")
 tf.flags.DEFINE_integer("log_every_n_steps", 10,
                         "Frequency at which loss and global step are logged.")
@@ -65,20 +63,20 @@ tf.flags.DEFINE_integer("ndf", 64,
 # Summary
 tf.flags.DEFINE_integer("summary_freq", 50, #100
                         "update summaries every summary_freq steps")
-tf.flags.DEFINE_integer("progress_freq", 50, #100
+tf.flags.DEFINE_integer("progress_freq", 10, #100
                         "display progress every progress_freq steps")
 tf.flags.DEFINE_integer("trace_freq", 0,
                         "trace execution every trace_freq steps")
-tf.flags.DEFINE_integer("display_freq", 100, #300
+tf.flags.DEFINE_integer("display_freq", 300, #300
                         "write current training images every display_freq steps")
 tf.flags.DEFINE_integer("save_freq", 1000,
                         "save model every save_freq steps, 0 to disable")
 
-tf.flags.DEFINE_float("number_of_samples", 14176.0, "Samples in training set.")
+tf.flags.DEFINE_float("number_of_samples", 14221.0, "Samples in training set.")
 tf.flags.DEFINE_float("lr", 0.0002, "Initial learning rate.")
 tf.flags.DEFINE_float("beta1", 0.5, "momentum term of adam")
-tf.flags.DEFINE_float("content_l1_weight", 1.0, "Weight on L1 term of content.")
-tf.flags.DEFINE_float("perceptual_weight", 1.0, "weight on GAN term.")
+tf.flags.DEFINE_float("content_l1_weight", 0.2, "Weight on L1 term of content.")
+tf.flags.DEFINE_float("perceptual_weight", 0.8, "weight on GAN term.")
 tf.flags.DEFINE_float("tv_weight", 0.000005, "weight on TV term.")
 tf.flags.DEFINE_float("mask_weight", 0.1, "weight on the selection mask.")
 

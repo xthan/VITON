@@ -119,7 +119,7 @@ def parse_tf_example(serialized, stage=""):
 
   Args:
     serialized: A scalar string Tensor; a single serialized TF Example.
-    stage2; If True, not all values are returned.
+    stage; If "tps_points", return a different set of variables.
   Returns:
     encoded_image: A scalar string Tensor containing a JPEG encoded image.
     encoded_prod_image: A JPEG encoded image string of the product image.
