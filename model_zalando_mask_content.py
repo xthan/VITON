@@ -57,13 +57,13 @@ tf.flags.DEFINE_integer("ngf", 64,
 tf.flags.DEFINE_integer("ndf", 64,
                         "number of discriminator filters in first conv layer")
 # Summary
-tf.flags.DEFINE_integer("summary_freq", 100
+tf.flags.DEFINE_integer("summary_freq", 100,
                         "update summaries every summary_freq steps")
-tf.flags.DEFINE_integer("progress_freq", 10
+tf.flags.DEFINE_integer("progress_freq", 10,
                         "display progress every progress_freq steps")
 tf.flags.DEFINE_integer("trace_freq", 0,
                         "trace execution every trace_freq steps")
-tf.flags.DEFINE_integer("display_freq", 300
+tf.flags.DEFINE_integer("display_freq", 300,
                         "write current training images every display_freq steps")
 tf.flags.DEFINE_integer("save_freq", 3000,
                         "save model every save_freq steps, 0 to disable")
