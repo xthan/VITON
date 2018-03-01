@@ -1,5 +1,5 @@
 ## VITON: An Image-based Virtual Try-on Network
-Code and dataset for paper "VITON: An Image-based Virtual Try-on Network"
+Code and dataset for the CVPR 2018 paper "VITON: An Image-based Virtual Try-on Network"
 
 ### Person representation extraction
 The person representation used in this paper are extracted by a 2D pose estimator and a human parser:
@@ -76,9 +76,10 @@ Run ```train_stage2.sh```
 
 If this code or dataset helps your research, please cite our paper:
 
-    @article{han2017viton,
-      author = {Han, Xintong and Wu, Zuxuan and Wu, Zhe and Yu, Ruichi and Davis, Larry S},
+
+    @inproceedings{han2017viton,
       title = {VITON: An Image-based Virtual Try-on Network},
-      journal = {arXiv preprint arXiv:1711.08447},
-      year  = {2017},
+      author = {Han, Xintong and Wu, Zuxuan and Wu, Zhe and Yu, Ruichi and Davis, Larry S},
+      booktitle = {CVPR},
+      year  = {2018},
     }
