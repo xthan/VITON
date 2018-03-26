@@ -16,7 +16,7 @@ Put all folder and labels in the ```data``` folder:
 
 ```data/women_top```: reference images (image name is ID_0.jpg) and clothing images (image name is ID_1.jpg). For example, the clothing image on reference image 000001_0.jpg is 000001_1.jpg. The resolution of these images is 1100x762.
 
-```data/pose.pkl```: a pickle file containing a dictionary of the pose keypoints of each reference image. Please refer to [this demo](https://github.com/ZheC/Realtime_Multi-Person_Pose_Estimation/blob/master/testing/python/demo.ipynb) for how to parse the stored results, and [OpenPose output] https://github.com/CMU-Perceptual-Computing-Lab/openpose/blob/master/doc/output.md) to understand the output format.
+```data/pose.pkl```: a pickle file containing a dictionary of the pose keypoints of each reference image. Please refer to [this demo](https://github.com/ZheC/Realtime_Multi-Person_Pose_Estimation/blob/master/testing/python/demo.ipynb) for how to parse the stored results, and [OpenPose output](https://github.com/CMU-Perceptual-Computing-Lab/openpose/blob/master/doc/output.md) to understand the output format.
 
 ```data/pose/```: folder containing the pose keypoints of each reference image.
 
