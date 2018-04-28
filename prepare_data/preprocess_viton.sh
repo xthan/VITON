@@ -7,7 +7,7 @@ IMAGE_DIR=${PROJ_DIR}"data/women_top/"
 POSE_DIR=${PROJ_DIR}"data/pose.pkl"
 SEG_DIR=${PROJ_DIR}"data/segment/"
 OUTPUT_DIR=${PROJ_DIR}"prepare_data/tfrecord/"
-TPS_DIR=${PROJ_DIR}$"data/tps/"
+TPS_DIR=${PROJ_DIR}"data/tps/"
 
 python build_viton.py  --image_dir="${IMAGE_DIR}" \
   --pose_dir="${POSE_DIR}" \
