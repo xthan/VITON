@@ -54,5 +54,5 @@ for i = 1:50 %length(image1) % only run for first 10 images
     control_points = [x(point_index), y(point_index)]';
     control_points = [control_points(1,:) / w; control_points(2,:) / h];
     control_points = reshape(control_points, [2,n_control,n_control]);
-    save([MASK_DIR, image_name1, '_', image_name2, '_tps.mat'], 'control_points');
+    save([MASK_DIR, image_name1, '_', image_name2, '_tps.mat'], 'control_points', '-v6');
 end
