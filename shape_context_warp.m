@@ -3,10 +3,18 @@
 % Code for shape context matching (under shape_context folder) are modified from:
 % https://www2.eecs.berkeley.edu/Research/Projects/CS/vision/shape/sc_digits.html
 
-
 addpath('shape_context')
 DATA_ROOT='data/women_top/';
 MASK_DIR='results/stage1/tps/00015000_';
+
+% Check if using MATLAB or Octave
+isOctave = exist('OCTAVE_VERSION', 'builtin') ~= 0;
+if(isOctave)
+  % Load image package for resizing images
+  pkg load image;
+  % Turn off warning
+  warning('off', 'Octave:possible-matlab-short-circuit-operator');
+end
 
 [image1, image2] = textread('data/viton_test_pairs.txt', '%s %s\n');
 % using a smaller height and width for the shape context matching
@@ -15,7 +23,7 @@ h = 256/4;
 w = 192/4;
 % we use 10x10 control_points
 n_control = 10;
-for i = 1:50 %length(image1) % only run for first 10 images
+for i = 1:1 %length(image1) % only run over 1 image (for now)
     image_name1 = image1{i};
     image_name2 = image2{i};
     if exist([MASK_DIR, image_name1, '_', image_name2, '_tps.mat'])
