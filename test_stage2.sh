@@ -5,4 +5,4 @@ python model_zalando_refine_test.py \
   --mode test \
   --result_dir results/stage2/ \
   --begin 0 \
-  --end 50
+  --end 1 #exclusive

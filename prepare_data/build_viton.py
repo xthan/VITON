@@ -142,13 +142,7 @@ def _extract_pose_map(pose_keypoints, h, w):
 
 def _process_segment_map(segment, h, w):
   """Extract segment maps."""
-  # Segment is a reversed 641x641 heat map (20 values). 
   segment = np.asarray(segment, dtype=np.uint8)
-  segment = np.transpose(segment)
-  if h > w:
-    segment = segment[:, :int(641.0 * float(w) / float(h))]
-  else:
-    segment = segment[:int(641.0 * float(h) / float(w)), :]
   segment = imresize(segment, (h, w), interp='nearest')
   return segment.tostring()
 
