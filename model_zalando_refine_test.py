@@ -123,7 +123,7 @@ def main(unused_argv):
   except:
     pass
 
-  batch_size = 4
+  batch_size = 1
 
   # Feed into the refine module
   image_holder = tf.placeholder(tf.float32, shape=[batch_size,256,192,3])

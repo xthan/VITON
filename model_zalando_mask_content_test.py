@@ -119,7 +119,7 @@ def main(unused_argv):
     pass
 
   # batch inference, can also be done one image per time.
-  batch_size = 16
+  batch_size = 1
   image_holder = tf.placeholder(tf.float32, shape=[batch_size, 256, 192, 3])
   prod_image_holder = tf.placeholder(
       tf.float32, shape=[batch_size, 256, 192, 3])

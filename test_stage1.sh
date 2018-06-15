@@ -4,4 +4,4 @@ python model_zalando_mask_content_test.py \
   --mode test \
   --result_dir results/stage1/ \
   --begin 0 \
-  --end 50
+  --end 1 #exclusive

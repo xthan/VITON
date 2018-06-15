@@ -84,13 +84,7 @@ def extract_segmentation(segment):
 
 def process_segment_map(segment, h, w):
   """Extract segment maps."""
-  # Segment is a reversed 641x641 heat map (20 values).
   segment = np.asarray(segment, dtype=np.uint8)
-  segment = np.transpose(segment)
-  if h > w:
-    segment = segment[:, :int(641.0 * float(w) / float(h))]
-  else:
-    segment = segment[:int(641.0 * float(h) / float(w)), :]
   segment = imresize(segment, (h, w), interp='nearest')
   return segment
 
@@ -106,9 +100,6 @@ def extract_pose_representation(pose_keypoints, h, w, resize_h, resize_w):
 
   pose_keypoints = tf.cast(pose_keypoints, tf.int64)
   # pose_representation = tf.zeros((h, w, 18))
-
-  # Fucking hard assignment!
-  # tf.nn.dilation2d
 
   pose_representation = tf.one_hot(pose_keypoints, 3)
   return pose_representation
