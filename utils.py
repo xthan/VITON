@@ -80,12 +80,15 @@ def extract_segmentation(segment):
   return body_segmentation, product_segmentation, skin_segmentation
 
 
-
-
 def process_segment_map(segment, h, w):
   """Extract segment maps."""
-  segment = np.asarray(segment, dtype=np.uint8)
-  segment = imresize(segment, (h, w), interp='nearest')
+  segment = np.asarray(segment.T, dtype=np.uint8)
+  if h >= w:
+    segment = imresize(segment, (h, h), interp='nearest')
+    segment = segment[:, :w]
+  else:
+    segment = imresize(segment, (w, w), interp='nearest')
+    segment = segment[:h, :] 
   return segment
 
 

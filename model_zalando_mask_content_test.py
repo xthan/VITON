@@ -31,7 +31,7 @@ import scipy.misc
 import tensorflow as tf
 
 from utils import *
-from model_zalando_mask_content import create_model
+from model_zalando_mask_content import create_generator
 
 
 FLAGS = tf.app.flags.FLAGS
@@ -120,25 +120,22 @@ def main(unused_argv):
 
   # batch inference, can also be done one image per time.
   batch_size = 1
-  image_holder = tf.placeholder(tf.float32, shape=[batch_size, 256, 192, 3])
   prod_image_holder = tf.placeholder(
       tf.float32, shape=[batch_size, 256, 192, 3])
   body_segment_holder = tf.placeholder(
-      tf.float32, shape=[batch_size, 256, 192, 1])
-  prod_segment_holder = tf.placeholder(
       tf.float32, shape=[batch_size, 256, 192, 1])
   skin_segment_holder = tf.placeholder(
       tf.float32, shape=[batch_size, 256, 192, 3])
   pose_map_holder = tf.placeholder(tf.float32, shape=[batch_size, 256, 192, 18])
 
-  model = create_model(prod_image_holder, body_segment_holder,
-                       skin_segment_holder, pose_map_holder,
-                       prod_segment_holder, image_holder)
+
+  with tf.variable_scope("generator") as scope:
+    outputs = create_generator(prod_image_holder, body_segment_holder,
+                               skin_segment_holder, pose_map_holder, 4)
 
   images = np.zeros((batch_size, 256, 192, 3))
   prod_images = np.zeros((batch_size, 256, 192, 3))
   body_segments = np.zeros((batch_size, 256, 192, 1))
-  prod_segments = np.zeros((batch_size, 256, 192, 1))
   skin_segments = np.zeros((batch_size, 256, 192, 3))
   pose_raws = np.zeros((batch_size, 256, 192, 18))
 
@@ -149,6 +146,7 @@ def main(unused_argv):
     if checkpoint == None:
       checkpoint = FLAGS.checkpoint
     print(checkpoint)
+    step = int(checkpoint.split('-')[-1])
 
     saver.restore(sess, checkpoint)
 
@@ -170,30 +168,26 @@ def main(unused_argv):
          body_segment, prod_segment,
          skin_segment) = _process_image(image_name,
                                         product_image_name, sess)
+
         images[j-i] = image
         prod_images[j-i] = prod_image
         body_segments[j-i] = body_segment
-        prod_segments[j-i] = prod_segment
         skin_segments[j-i] = skin_segment
         pose_raws[j-i] = pose_raw
 
       # inference
       feed_dict = {
-          image_holder: images,
           prod_image_holder: prod_images,
           body_segment_holder: body_segments,
           skin_segment_holder: skin_segments,
-          prod_segment_holder: prod_segments,
           pose_map_holder: pose_raws,
       }
 
-      [image_output, mask_output, loss, step] = sess.run(
-          [model.image_outputs,
-           model.mask_outputs,
-           model.gen_loss_content_L1,
-           model.global_step],
-          feed_dict=feed_dict)
+      [image_and_mask_output] = sess.run([outputs],
+                                          feed_dict=feed_dict)
 
+      mask_output = image_and_mask_output[:,:,:,:1]
+      image_output = image_and_mask_output[:,:,:,1:]
       # write results
       for j in range(batch_size):
         scipy.misc.imsave(FLAGS.result_dir + ("images/%08d_" % step) +

@@ -140,10 +140,16 @@ def _extract_pose_map(pose_keypoints, h, w):
     pose_map[t:b+1, l:r+1, i] = True
   return pose_map.tostring()
 
-def _process_segment_map(segment, h, w):
+
+def process_segment_map(segment, h, w):
   """Extract segment maps."""
-  segment = np.asarray(segment, dtype=np.uint8)
-  segment = imresize(segment, (h, w), interp='nearest')
+  segment = np.asarray(segment.T, dtype=np.uint8)
+  if h >= w:
+    segment = imresize(segment, (h, h), interp='nearest')
+    segment = segment[:, :w]
+  else:
+    segment = imresize(segment, (w, w), interp='nearest')
+    segment = segment[:h, :] 
   return segment.tostring()
 
 
