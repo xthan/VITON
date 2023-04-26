@@ -6,6 +6,8 @@ The person representation used in this paper are extracted by a 2D pose estimato
 * [Realtime Multi-Person Pose Estimation](https://github.com/ZheC/Realtime_Multi-Person_Pose_Estimation)
 * [Self-supervised Structure-sensitive Learning](https://github.com/Engineering-Course/LIP_SSL)
 
+Thanks [@MosbehBarhoumi](https://github.com/MosbehBarhoumi) for creating a [Colab Notebook](https://github.com/MosbehBarhoumi/VITON-PRE-PROCESSING) for quick preprocessing the data.
+
 ### Dataset
 The dataset is no longer publicly available due to copyright issues. For thoese who have already downloaded the dataset, please note that using or distributing it is illegal!
 
